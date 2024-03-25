@@ -1,50 +1,92 @@
-<!doctype html>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>廖韋凱</title>
-    <link rel="icon" href="badminton.png">
-    <script type="text/javascript">
-        function display_c() {
-            var refresh = 1000;
-            mytime = setTimeout('display_ct()', refresh)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
-        function display_ct() {
-            var date = new Date()
-            var time = (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-            document.getElementById('ct').innerHTML = time;
-            display_c();
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-    </script>
+
+        #message-input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        #message-board {
+            width: 100%;
+            height: 200px;
+            overflow-y: scroll;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #visitor-counter {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-<audio autoplay=true controls="true" loop=true src="price-of-freedom-33106.mp3" type="audio/mp3"></audio>
-<style>
-    a:link,
-    a:visited {
-        color: rgb(34, 0, 255);
-        text-decoration: none;
-        display: inline-block;
-    }
+<body>
+    <div class="container">
+        <img src="me.jpg" alt="Your Photo" width="150">
+        <h1>About Me</h1>
+        <p>I am Kai, a student in NTUEE, ID is r12921a23.</p>
+        <div id="message-board" contenteditable="true"></div>
+        <input type="text" id="message-input" placeholder="Leave a message...">
+        <button onclick="postMessage()">Post Message</button>
+        <p id="visitor-counter">Visitor Count: <span id="count">0</span></p>
+    </div>
 
-    a:hover,
-    a:active {
-        color: rgb(255, 0, 0);
-    }
-</style>
+    <script>
+        // Message Board
+        function postMessage() {
+            var messageInput = document.getElementById('message-input');
+            var messageBoard = document.getElementById('message-board');
 
+            var message = messageInput.value.trim();
+            if (message !== '') {
+                var newMessage = document.createElement('p');
+                newMessage.textContent = message;
+                messageBoard.appendChild(newMessage);
+                messageInput.value = '';
+            }
+        }
 
+        // Visitor Counter
+        function updateVisitorCount() {
+            var countSpan = document.getElementById('count');
+            var count = parseInt(localStorage.getItem('visitorCount')) || 0;
+            count++;
+            countSpan.textContent = count;
+            localStorage.setItem('visitorCount', count);
+        }
 
-<body onload=display_ct(); style="background-color:rgb(206, 206, 206);">
-    <h1>自我介紹</h1><br>
-    <img src="B07701244_廖韋凱.JPEG" width="125" height="160"><br>
-    <h3>簡介</h3>
-    我是廖韋凱，目前為<a href="https://management.ntu.edu.tw/BA">國立台灣大學工商管理學系</a>的學生，高中畢業於<a
-        href="https://www.kshs.kh.edu.tw/">高雄市立高雄高級中學</a>。<br>
-    興趣為撞球、羽球、桌球。其中最喜歡的羽球選手為<a href="https://zh.wikipedia.org/wiki/%E6%9D%8E%E5%AE%97%E4%BC%9F">李宗偉</a>。
-
-    <p><span id='ct'></span></p>
+        updateVisitorCount();
+    </script>
 </body>
-
 </html>
